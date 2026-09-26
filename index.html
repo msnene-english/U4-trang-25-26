@@ -1,0 +1,1732 @@
+<!DOCTYPE html>
+    <html lang="vi">
+    <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>rU4 trang 25-26</title>
+    <style>
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; max-width: 800px; margin: 0 auto; padding: 20px; background-color: #f0f2f5; position: relative; z-index: 1; }
+        .watermark { position: absolute; top: 30px; left: 0; right: 0; text-align: center; font-size: 50px; color: rgba(0, 0, 0, 0.04); font-weight: bold; pointer-events: none; z-index: -1; user-select: none; }
+        .watermark div { transform: rotate(-30deg); margin: 200px 0; }
+        h1, h2 { color: #2c3e50; text-align: center; }
+        .screen { display: none; background: #fff; padding: 30px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .screen.active { display: block; }
+        
+        input[type="text"] { width: 100%; padding: 12px; margin: 10px 0 20px; border: 2px solid #ddd; border-radius: 6px; box-sizing: border-box; font-size: 16px; transition: border-color 0.3s; }
+        input[type="text"]:focus { border-color: #3498db; outline: none; }
+        
+        button { background: #3498db; color: #fff; border: none; padding: 12px 24px; font-size: 16px; border-radius: 6px; cursor: pointer; transition: background 0.3s, transform 0.1s; }
+        button:hover { background: #2980b9; }
+        button:active { transform: scale(0.98); }
+        button:disabled { background: #95a5a6; cursor: not-allowed; }
+        
+        .question-block { margin-bottom: 25px; padding: 15px; background: #f9f9f9; border-left: 4px solid #3498db; border-radius: 0 8px 8px 0; }
+        .instruction-box { margin-bottom: 15px; padding: 10px 15px; background: #e8f4fd; border: 1px solid #b6d4fe; border-radius: 6px; font-weight: bold; color: #004085; }
+        .question-text { font-weight: 500; margin-bottom: 15px; font-size: 16px; line-height: 1.8; }
+        
+        .options { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+        .option { padding: 12px 15px; background: #fff; border: 2px solid #eee; border-radius: 8px; cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 10px; }
+        .option:hover { border-color: #3498db; background: #f8faff; }
+        .option.selected { border-color: #3498db; background: #ebf5ff; }
+        .option.correct-opt { border-color: #2ecc71; background: #eafaf1; }
+        .option.wrong-opt { border-color: #e74c3c; background: #fdedec; }
+        
+        .radio-circle { width: 20px; height: 20px; border: 2px solid #ddd; border-radius: 50%; position: relative; }
+        .option.selected .radio-circle::after { content: ''; position: absolute; top: 4px; left: 4px; width: 12px; height: 12px; background: #3498db; border-radius: 50%; }
+        
+        .gap-fill-input { width: 120px !important; padding: 4px 8px !important; margin: 0 5px !important; display: inline-block !important; border: 1px solid #ccc !important; border-radius: 4px !important; font-size: 16px !important; }
+        
+        .reordering-container { display: flex; flex-direction: column; gap: 15px; }
+        .word-bank, .drop-zone { display: flex; flex-wrap: wrap; gap: 8px; min-height: 45px; padding: 10px; background: #fff; border: 2px dashed #ddd; border-radius: 8px; }
+        .word-chip { padding: 8px 16px; background: #3498db; color: #fff; border-radius: 20px; cursor: pointer; user-select: none; font-weight: 500; transition: transform 0.1s; }
+        .word-chip:active { transform: scale(0.95); }
+        .word-chip.correct { background: #2ecc71; }
+        .word-chip.wrong { background: #e74c3c; }
+        
+        .rewrite-input { width: 100%; height: 80px; padding: 12px; border: 2px solid #ddd; border-radius: 6px; resize: vertical; font-size: 16px; font-family: inherit; }
+        
+        .check-btn { margin-top: 15px; background: #3498db; font-size: 14px; padding: 8px 16px; }
+        .explanation { display: none; margin-top: 15px; padding: 15px; background: #eef2f5; border-radius: 6px; font-size: 14.5px; line-height: 1.5; color: #2c3e50; border-left: 4px solid #2ecc71; }
+        
+        .progress-bar { width: 100%; height: 10px; background: #ddd; border-radius: 5px; margin-bottom: 20px; overflow: hidden; }
+        .progress-fill { height: 100%; background: #2ecc71; width: 0%; transition: width 0.3s; }
+        
+        .result-details { margin-top: 20px; padding: 15px; padding-bottom: 30px; background: #f8f9fa; border-radius: 6px; text-align: left; max-height: 60vh; overflow-y: auto; font-size: 14px; }
+        .error-item { margin-bottom: 10px; padding-bottom: 10px; border-bottom: 1px solid #eee; color: #e74c3c; }
+    </style>
+    </head>
+    <body>
+    <div class="watermark">
+        <div>rU4 trang 25-26<br>GV biên soạn: Ms Chí Nên - 0852639652</div>
+        <div>rU4 trang 25-26<br>GV biên soạn: Ms Chí Nên - 0852639652</div>
+        <div>rU4 trang 25-26<br>GV biên soạn: Ms Chí Nên - 0852639652</div>
+        <div>rU4 trang 25-26<br>GV biên soạn: Ms Chí Nên - 0852639652</div>
+    </div>
+    
+    <div id="startScreen" class="screen active">
+        <h1>rU4 trang 25-26</h1>
+        <p style="text-align: center; color: #7f8c8d;">Nhập họ và tên của bạn để bắt đầu làm bài</p>
+        <input type="text" id="studentName" placeholder="Ví dụ: Nguyễn Văn A" autocomplete="off">
+        <div style="text-align: center;">
+            <button onclick="startTest()">Bắt đầu làm bài</button>
+        </div>
+    </div>
+    
+    <div id="testScreen" class="screen">
+        <h2>rU4 trang 25-26</h2>
+        <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        <div id="questionsContainer"></div>
+        <div style="text-align: center; margin-top: 30px;">
+            <button id="submitBtn" onclick="confirmSubmit()" style="background: #2ecc71; font-weight: bold; padding: 15px 40px;">NỘP BÀI</button>
+        </div>
+    </div>
+    
+    <div id="resultScreen" class="screen" style="text-align: center;">
+        <h1 style="color: #2ecc71; font-size: 36px;">Hoàn thành!</h1>
+        <h2 id="scoreDisplay" style="font-size: 48px; margin: 20px 0; color: #2c3e50;"></h2>
+        <p id="feedbackText" style="font-size: 18px; color: #7f8c8d;"></p>
+        <div class="result-details" id="resultDetails"></div>
+    </div>
+    
+    <div style="text-align: center; margin-top: 50px; padding: 20px; color: #7f8c8d; font-size: 14px; border-top: 1px solid #ddd;">
+        GV biên soạn: Ms Chí Nên - 0852639652
+    </div>
+    
+    <script>
+        const testName = 'rU4 trang 25-26';
+        const quizData = [
+    {
+        "id": "1",
+        "type": "gap_fill_text",
+        "questionHTML": "We used to go skating at the ice {{blank:1}} every Saturday.",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "rink"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: rink"
+    },
+    {
+        "id": "2",
+        "type": "gap_fill_text",
+        "questionHTML": "Keith had never seen such a large golf {{blank:1}} until he went to Scotland.",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "course"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: course"
+    },
+    {
+        "id": "3",
+        "type": "gap_fill_text",
+        "questionHTML": "We all met at the basketball {{blank:1}} at half past three.",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "court"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: court"
+    },
+    {
+        "id": "4",
+        "type": "gap_fill_text",
+        "questionHTML": "It's called a boxing {{blank:1}}, but it's actually square!",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "ring"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: ring"
+    },
+    {
+        "id": "5",
+        "type": "gap_fill_text",
+        "questionHTML": "For the 800 metres race, you have to run round the {{blank:1}} twice.",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "track"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: track"
+    },
+    {
+        "id": "6",
+        "type": "gap_fill_text",
+        "questionHTML": "The football match had to be called off because the {{blank:1}} was flooded.",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "pitch"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: pitch"
+    },
+    {
+        "id": "7",
+        "type": "gap_fill_text",
+        "questionHTML": "Our team {{blank:1}} until half time, but in the second half the other team {{blank:2}} three goals, and so they {{blank:3}} us. But it was a great match!",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "was winning"
+                ]
+            },
+            {
+                "blankId": "2",
+                "correctAnswers": [
+                    "scored"
+                ]
+            },
+            {
+                "blankId": "3",
+                "correctAnswers": [
+                    "beat"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án: was winning / scored / beat"
+    },
+    {
+        "id": "8",
+        "type": "gap_fill_text",
+        "questionHTML": "Adrian got a new fishing {{blank:1}} for his birthday.",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "rod"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: rod"
+    },
+    {
+        "id": "9",
+        "type": "gap_fill_text",
+        "questionHTML": "Can I borrow your tennis {{blank:1}} ?",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "racket"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: racket"
+    },
+    {
+        "id": "10",
+        "type": "gap_fill_text",
+        "questionHTML": "Why are hockey {{blank:1}} such a strange shape?",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "sticks"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: sticks"
+    },
+    {
+        "id": "11",
+        "type": "gap_fill_text",
+        "questionHTML": "I'd spend hours putting linseed oil on my cricket {{blank:1}} to keep the wood strong.",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "bat",
+                    "bats"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: bat"
+    },
+    {
+        "id": "12",
+        "type": "multiple_choice",
+        "questionHTML": "The <b>umpire / referee</b> blew the whistle and the most important football match I've ever played began.",
+        "options": [
+            {
+                "label": "A",
+                "text": "umpire",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "referee",
+                "isCorrect": true
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: referee"
+    },
+    {
+        "id": "13",
+        "type": "multiple_choice",
+        "questionHTML": "We used to play rugby in the winter term, football in the spring term, and we'd do <b>athletics / sport</b> and swimming in the summer term.",
+        "options": [
+            {
+                "label": "A",
+                "text": "athletics",
+                "isCorrect": true
+            },
+            {
+                "label": "B",
+                "text": "sport",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: athletics"
+    },
+    {
+        "id": "14",
+        "type": "multiple_choice",
+        "questionHTML": "Do you fancy a <b>game / play</b> of cards?",
+        "options": [
+            {
+                "label": "A",
+                "text": "game",
+                "isCorrect": true
+            },
+            {
+                "label": "B",
+                "text": "play",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: game"
+    },
+    {
+        "id": "15",
+        "type": "multiple_choice",
+        "questionHTML": "I only do magic tricks for fun. I've never thought of becoming an <b>amateur / a professional</b> magician.",
+        "options": [
+            {
+                "label": "A",
+                "text": "amateur",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "professional",
+                "isCorrect": true
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: professional"
+    },
+    {
+        "id": "16",
+        "type": "multiple_choice",
+        "questionHTML": "The play was so boring, we walked out during <b>half time / the interval</b>.",
+        "options": [
+            {
+                "label": "A",
+                "text": "half time",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "the interval",
+                "isCorrect": true
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: the interval"
+    },
+    {
+        "id": "17",
+        "type": "multiple_choice",
+        "questionHTML": "Coventry City <b>equalled / drew</b> 3-3 with Sunderland in the match last Saturday.",
+        "options": [
+            {
+                "label": "A",
+                "text": "equalled",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "drew",
+                "isCorrect": true
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: drew"
+    },
+    {
+        "id": "18",
+        "type": "multiple_choice",
+        "questionHTML": "<b>Spectators / Viewers</b> who watched last week's programme will remember we were looking at the history of baseball.",
+        "options": [
+            {
+                "label": "A",
+                "text": "Spectators",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "Viewers",
+                "isCorrect": true
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: Viewers"
+    },
+    {
+        "id": "19",
+        "type": "multiple_choice",
+        "questionHTML": "We got through to the <b>final / finale</b>, but then lost to Cirencester.",
+        "options": [
+            {
+                "label": "A",
+                "text": "final",
+                "isCorrect": true
+            },
+            {
+                "label": "B",
+                "text": "finale",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: final"
+    },
+    {
+        "id": "20",
+        "type": "multiple_choice",
+        "questionHTML": "Most people prefer films which have a happy <b>end / ending</b>.",
+        "options": [
+            {
+                "label": "A",
+                "text": "end",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "ending",
+                "isCorrect": true
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: ending"
+    },
+    {
+        "id": "21",
+        "type": "multiple_choice",
+        "questionHTML": "Would all <b>opponents / competitors</b> please make their way to the starting line?",
+        "options": [
+            {
+                "label": "A",
+                "text": "opponents",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "competitors",
+                "isCorrect": true
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: competitors"
+    },
+    {
+        "id": "22",
+        "type": "sentence_rewrite",
+        "originalSentenceHTML": "I don't know how you can stand getting up so early to go to the pool. (put)",
+        "questionHTML": "I don't know how you can _________________ up so early to go to the pool.",
+        "correctAnswers": [
+            "put up with getting"
+        ],
+        "sampleAnswers": [
+            "put up with getting"
+        ],
+        "explanationHTML": "Đáp án đúng: put up with getting"
+    },
+    {
+        "id": "23",
+        "type": "sentence_rewrite",
+        "originalSentenceHTML": "I've finally started sorting out my postcard collection. (round)",
+        "questionHTML": "I've finally _________________ sorting out my postcard collection.",
+        "correctAnswers": [
+            "got round to"
+        ],
+        "sampleAnswers": [
+            "got round to"
+        ],
+        "explanationHTML": "Đáp án đúng: got round to"
+    },
+    {
+        "id": "24",
+        "type": "sentence_rewrite",
+        "originalSentenceHTML": "What did you do at the weekend? (get)",
+        "questionHTML": "What did you _________________ at the weekend?",
+        "correctAnswers": [
+            "get up to"
+        ],
+        "sampleAnswers": [
+            "get up to"
+        ],
+        "explanationHTML": "Đáp án đúng: get up to"
+    },
+    {
+        "id": "25",
+        "type": "sentence_rewrite",
+        "originalSentenceHTML": "I'm not so keen on skiing now I've discovered snowboarding. (gone)",
+        "questionHTML": "I've _________________ since I discovered snowboarding.",
+        "correctAnswers": [
+            "gone off skiing"
+        ],
+        "sampleAnswers": [
+            "gone off skiing"
+        ],
+        "explanationHTML": "Đáp án đúng: gone off skiing"
+    },
+    {
+        "id": "26",
+        "type": "sentence_rewrite",
+        "originalSentenceHTML": "Why do you continue to have riding lessons if you can't afford them? (on)",
+        "questionHTML": "Why do you _________________ riding lessons if you can't afford them?",
+        "correctAnswers": [
+            "carry on having"
+        ],
+        "sampleAnswers": [
+            "carry on having"
+        ],
+        "explanationHTML": "Đáp án đúng: carry on having"
+    },
+    {
+        "id": "27",
+        "type": "sentence_rewrite",
+        "originalSentenceHTML": "We can't delay the match any longer. (put)",
+        "questionHTML": "We can't _________________ any longer.",
+        "correctAnswers": [
+            "put off the match",
+            "put the match off",
+            "put off the match off"
+        ],
+        "sampleAnswers": [
+            "put off the match",
+            "put the match off",
+            "put off the match off"
+        ],
+        "explanationHTML": "Đáp án đúng: put off the match"
+    },
+    {
+        "id": "28",
+        "type": "gap_fill_text",
+        "questionHTML": "Tony never used to want to join {{blank:1}} with the other kids in the playground.",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "in"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: in"
+    },
+    {
+        "id": "29",
+        "type": "gap_fill_text",
+        "questionHTML": "Look {{blank:1}} ! There's a car coming!",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "out"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: out"
+    },
+    {
+        "id": "30",
+        "type": "gap_fill_text",
+        "questionHTML": "Simone's {{blank:1}} to wearing a helmet whenever she goes cycling.",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "taken"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: taken"
+    },
+    {
+        "id": "31",
+        "type": "gap_fill_text",
+        "questionHTML": "I was thinking of taking {{blank:1}} scuba diving until I found out how expensive the equipment is.",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "up"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: up"
+    },
+    {
+        "id": "32",
+        "type": "gap_fill_text",
+        "questionHTML": "They were knocked {{blank:1}} in the semi-final.",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "out"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: out"
+    },
+    {
+        "id": "33",
+        "type": "gap_fill_text",
+        "questionHTML": "Maybe we should bring the meeting {{blank:1}} to this Tuesday instead of having it in two weeks' time.",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "forward"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: forward"
+    },
+    {
+        "id": "34",
+        "type": "gap_fill_text",
+        "questionHTML": "Becca had to pull {{blank:1}} of the race when she sprained her ankle.",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "out"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: out"
+    },
+    {
+        "id": "35",
+        "type": "gap_fill_text",
+        "questionHTML": "Melissa doesn't {{blank:1}} in for adventure sports.",
+        "blanks": [
+            {
+                "blankId": "1",
+                "correctAnswers": [
+                    "go"
+                ]
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: go"
+    },
+    {
+        "id": "36",
+        "type": "multiple_choice",
+        "questionHTML": "Why don't you ............ a go? It's not difficult!",
+        "options": [
+            {
+                "label": "A",
+                "text": "make",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "have",
+                "isCorrect": true
+            },
+            {
+                "label": "C",
+                "text": "do",
+                "isCorrect": false
+            },
+            {
+                "label": "D",
+                "text": "set",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: B"
+    },
+    {
+        "id": "37",
+        "type": "multiple_choice",
+        "questionHTML": "Carl wasn't very good at mountain climbing as he's afraid of ............ .",
+        "options": [
+            {
+                "label": "A",
+                "text": "highs",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "highness",
+                "isCorrect": false
+            },
+            {
+                "label": "C",
+                "text": "heights",
+                "isCorrect": true
+            },
+            {
+                "label": "D",
+                "text": "height",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: C"
+    },
+    {
+        "id": "38",
+        "type": "multiple_choice",
+        "questionHTML": "There's little ............ of our getting into the final.",
+        "options": [
+            {
+                "label": "A",
+                "text": "opportunity",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "chance",
+                "isCorrect": true
+            },
+            {
+                "label": "C",
+                "text": "luck",
+                "isCorrect": false
+            },
+            {
+                "label": "D",
+                "text": "fortune",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: B"
+    },
+    {
+        "id": "39",
+        "type": "multiple_choice",
+        "questionHTML": "Rachel is mad ............ the Eurovision Song Contest.",
+        "options": [
+            {
+                "label": "A",
+                "text": "from",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "against",
+                "isCorrect": false
+            },
+            {
+                "label": "C",
+                "text": "for",
+                "isCorrect": false
+            },
+            {
+                "label": "D",
+                "text": "about",
+                "isCorrect": true
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: D"
+    },
+    {
+        "id": "40",
+        "type": "multiple_choice",
+        "questionHTML": "Just ............ your best - that's all anyone can ask of you.",
+        "options": [
+            {
+                "label": "A",
+                "text": "do",
+                "isCorrect": true
+            },
+            {
+                "label": "B",
+                "text": "make",
+                "isCorrect": false
+            },
+            {
+                "label": "C",
+                "text": "be",
+                "isCorrect": false
+            },
+            {
+                "label": "D",
+                "text": "have",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: A"
+    },
+    {
+        "id": "41",
+        "type": "multiple_choice",
+        "questionHTML": "It's ............ time you learned to swim.",
+        "options": [
+            {
+                "label": "A",
+                "text": "big",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "tall",
+                "isCorrect": false
+            },
+            {
+                "label": "C",
+                "text": "high",
+                "isCorrect": true
+            },
+            {
+                "label": "D",
+                "text": "far",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: C"
+    },
+    {
+        "id": "42",
+        "type": "multiple_choice",
+        "questionHTML": "Grandma ............ a lot of pleasure from gardening.",
+        "options": [
+            {
+                "label": "A",
+                "text": "does",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "has",
+                "isCorrect": false
+            },
+            {
+                "label": "C",
+                "text": "makes",
+                "isCorrect": false
+            },
+            {
+                "label": "D",
+                "text": "gets",
+                "isCorrect": true
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: D"
+    },
+    {
+        "id": "43",
+        "type": "multiple_choice",
+        "questionHTML": "............ your time - don't rush.",
+        "options": [
+            {
+                "label": "A",
+                "text": "Tell",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "Find",
+                "isCorrect": false
+            },
+            {
+                "label": "C",
+                "text": "Spend",
+                "isCorrect": false
+            },
+            {
+                "label": "D",
+                "text": "Take",
+                "isCorrect": true
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: D"
+    },
+    {
+        "id": "44",
+        "type": "multiple_choice",
+        "questionHTML": "Each player takes it ............ turn to roll the dice.",
+        "options": [
+            {
+                "label": "A",
+                "text": "on",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "in",
+                "isCorrect": true
+            },
+            {
+                "label": "C",
+                "text": "at",
+                "isCorrect": false
+            },
+            {
+                "label": "D",
+                "text": "to",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: B"
+    },
+    {
+        "id": "45",
+        "type": "multiple_choice",
+        "questionHTML": "Time ............ so quickly when you're doing something enjoyable.",
+        "options": [
+            {
+                "label": "A",
+                "text": "takes",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "spends",
+                "isCorrect": false
+            },
+            {
+                "label": "C",
+                "text": "passes",
+                "isCorrect": true
+            },
+            {
+                "label": "D",
+                "text": "finds",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: C"
+    },
+    {
+        "id": "46",
+        "type": "multiple_choice",
+        "questionHTML": "Our new coach is popular ............ the whole team.",
+        "options": [
+            {
+                "label": "A",
+                "text": "for",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "to",
+                "isCorrect": false
+            },
+            {
+                "label": "C",
+                "text": "by",
+                "isCorrect": false
+            },
+            {
+                "label": "D",
+                "text": "with",
+                "isCorrect": true
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: D"
+    },
+    {
+        "id": "47",
+        "type": "multiple_choice",
+        "questionHTML": "She'd ............ hours lying on her bed, reading.",
+        "options": [
+            {
+                "label": "A",
+                "text": "spend",
+                "isCorrect": true
+            },
+            {
+                "label": "B",
+                "text": "take",
+                "isCorrect": false
+            },
+            {
+                "label": "C",
+                "text": "make",
+                "isCorrect": false
+            },
+            {
+                "label": "D",
+                "text": "pass",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: A"
+    },
+    {
+        "id": "48",
+        "type": "multiple_choice",
+        "questionHTML": "He'd been planning to leave the team the ............ time, and hadn't told anyone.",
+        "options": [
+            {
+                "label": "A",
+                "text": "complete",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "whole",
+                "isCorrect": true
+            },
+            {
+                "label": "C",
+                "text": "total",
+                "isCorrect": false
+            },
+            {
+                "label": "D",
+                "text": "full",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: B"
+    },
+    {
+        "id": "49",
+        "type": "multiple_choice",
+        "questionHTML": "I'm not siding ............ her because she's my sister, but because she's right.",
+        "options": [
+            {
+                "label": "A",
+                "text": "from",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "for",
+                "isCorrect": false
+            },
+            {
+                "label": "C",
+                "text": "to",
+                "isCorrect": false
+            },
+            {
+                "label": "D",
+                "text": "with",
+                "isCorrect": true
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: D"
+    },
+    {
+        "id": "50",
+        "type": "multiple_choice",
+        "questionHTML": "I'm not very fond ............ <br><br>A in playing for the school team.<br>B to find enough time to have any hobbies.<br>C to try to find the golf balls we'd lost.<br>D of playing in goal.<br>E from finishing the game.<br>F to what the coach thinks first.<br>G on getting fit.",
+        "options": [
+            {
+                "label": "A",
+                "text": "A",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "B",
+                "isCorrect": false
+            },
+            {
+                "label": "C",
+                "text": "C",
+                "isCorrect": false
+            },
+            {
+                "label": "D",
+                "text": "D",
+                "isCorrect": true
+            },
+            {
+                "label": "E",
+                "text": "E",
+                "isCorrect": false
+            },
+            {
+                "label": "F",
+                "text": "F",
+                "isCorrect": false
+            },
+            {
+                "label": "G",
+                "text": "G",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: D"
+    },
+    {
+        "id": "51",
+        "type": "multiple_choice",
+        "questionHTML": "She's interested ............ <br><br>A in playing for the school team.<br>B to find enough time to have any hobbies.<br>C to try to find the golf balls we'd lost.<br>D of playing in goal.<br>E from finishing the game.<br>F to what the coach thinks first.<br>G on getting fit.",
+        "options": [
+            {
+                "label": "A",
+                "text": "A",
+                "isCorrect": true
+            },
+            {
+                "label": "B",
+                "text": "B",
+                "isCorrect": false
+            },
+            {
+                "label": "C",
+                "text": "C",
+                "isCorrect": false
+            },
+            {
+                "label": "D",
+                "text": "D",
+                "isCorrect": false
+            },
+            {
+                "label": "E",
+                "text": "E",
+                "isCorrect": false
+            },
+            {
+                "label": "F",
+                "text": "F",
+                "isCorrect": false
+            },
+            {
+                "label": "G",
+                "text": "G",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: A"
+    },
+    {
+        "id": "52",
+        "type": "multiple_choice",
+        "questionHTML": "You should concentrate ............ <br><br>A in playing for the school team.<br>B to find enough time to have any hobbies.<br>C to try to find the golf balls we'd lost.<br>D of playing in goal.<br>E from finishing the game.<br>F to what the coach thinks first.<br>G on getting fit.",
+        "options": [
+            {
+                "label": "A",
+                "text": "A",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "B",
+                "isCorrect": false
+            },
+            {
+                "label": "C",
+                "text": "C",
+                "isCorrect": false
+            },
+            {
+                "label": "D",
+                "text": "D",
+                "isCorrect": false
+            },
+            {
+                "label": "E",
+                "text": "E",
+                "isCorrect": false
+            },
+            {
+                "label": "F",
+                "text": "F",
+                "isCorrect": false
+            },
+            {
+                "label": "G",
+                "text": "G",
+                "isCorrect": true
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: G"
+    },
+    {
+        "id": "53",
+        "type": "multiple_choice",
+        "questionHTML": "I used to find it difficult ............ <br><br>A in playing for the school team.<br>B to find enough time to have any hobbies.<br>C to try to find the golf balls we'd lost.<br>D of playing in goal.<br>E from finishing the game.<br>F to what the coach thinks first.<br>G on getting fit.",
+        "options": [
+            {
+                "label": "A",
+                "text": "A",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "B",
+                "isCorrect": true
+            },
+            {
+                "label": "C",
+                "text": "C",
+                "isCorrect": false
+            },
+            {
+                "label": "D",
+                "text": "D",
+                "isCorrect": false
+            },
+            {
+                "label": "E",
+                "text": "E",
+                "isCorrect": false
+            },
+            {
+                "label": "F",
+                "text": "F",
+                "isCorrect": false
+            },
+            {
+                "label": "G",
+                "text": "G",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: B"
+    },
+    {
+        "id": "54",
+        "type": "multiple_choice",
+        "questionHTML": "Let's listen ............ <br><br>A in playing for the school team.<br>B to find enough time to have any hobbies.<br>C to try to find the golf balls we'd lost.<br>D of playing in goal.<br>E from finishing the game.<br>F to what the coach thinks first.<br>G on getting fit.",
+        "options": [
+            {
+                "label": "A",
+                "text": "A",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "B",
+                "isCorrect": false
+            },
+            {
+                "label": "C",
+                "text": "C",
+                "isCorrect": false
+            },
+            {
+                "label": "D",
+                "text": "D",
+                "isCorrect": false
+            },
+            {
+                "label": "E",
+                "text": "E",
+                "isCorrect": false
+            },
+            {
+                "label": "F",
+                "text": "F",
+                "isCorrect": true
+            },
+            {
+                "label": "G",
+                "text": "G",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: F"
+    },
+    {
+        "id": "55",
+        "type": "multiple_choice",
+        "questionHTML": "We stopped ............ <br><br>A in playing for the school team.<br>B to find enough time to have any hobbies.<br>C to try to find the golf balls we'd lost.<br>D of playing in goal.<br>E from finishing the game.<br>F to what the coach thinks first.<br>G on getting fit.",
+        "options": [
+            {
+                "label": "A",
+                "text": "A",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "B",
+                "isCorrect": false
+            },
+            {
+                "label": "C",
+                "text": "C",
+                "isCorrect": true
+            },
+            {
+                "label": "D",
+                "text": "D",
+                "isCorrect": false
+            },
+            {
+                "label": "E",
+                "text": "E",
+                "isCorrect": false
+            },
+            {
+                "label": "F",
+                "text": "F",
+                "isCorrect": false
+            },
+            {
+                "label": "G",
+                "text": "G",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: C"
+    },
+    {
+        "id": "56",
+        "type": "multiple_choice",
+        "questionHTML": "The bad weather stopped us ............ <br><br>A in playing for the school team.<br>B to find enough time to have any hobbies.<br>C to try to find the golf balls we'd lost.<br>D of playing in goal.<br>E from finishing the game.<br>F to what the coach thinks first.<br>G on getting fit.",
+        "options": [
+            {
+                "label": "A",
+                "text": "A",
+                "isCorrect": false
+            },
+            {
+                "label": "B",
+                "text": "B",
+                "isCorrect": false
+            },
+            {
+                "label": "C",
+                "text": "C",
+                "isCorrect": false
+            },
+            {
+                "label": "D",
+                "text": "D",
+                "isCorrect": false
+            },
+            {
+                "label": "E",
+                "text": "E",
+                "isCorrect": true
+            },
+            {
+                "label": "F",
+                "text": "F",
+                "isCorrect": false
+            },
+            {
+                "label": "G",
+                "text": "G",
+                "isCorrect": false
+            }
+        ],
+        "explanationHTML": "Đáp án đúng: E"
+    }
+];
+        
+          let state = {};
+          
+          function normalize(str) {
+              return str.replace(/\u00a0/g, ' ').replace(/[\s\n\r]+/g, ' ').trim();
+          }
+
+          function init() {
+              const container = document.getElementById('questionsContainer');
+              
+              quizData.forEach((q, index) => {
+                  state[q.id] = { checked: false, isCorrect: false, value: null };
+                  
+                  let block = document.createElement('div');
+                  block.className = 'question-block';
+                  block.id = 'q-block-' + q.id;
+                  
+                  let qText = q.questionHTML || q.question;
+                  let origText = q.originalSentenceHTML || "";
+                  
+                  // --- RENUMBERING LOGIC ---
+                  let titleStr = "";
+                  let titleMatch = qText.match(/^(<b>.*?<\/b>\s*<br\s*\/?>\s*)/i);
+                  if (titleMatch) {
+                      titleStr = titleMatch[1];
+                      qText = qText.substring(titleMatch[1].length);
+                  }
+                  
+                  // Strip leading numbers from qText
+                  qText = qText.replace(/^\d+[\.\)]?\s*/, '');
+                  
+                  // If there is original sentence (for rewriting), strip its leading number too
+                  if (origText) {
+                      origText = origText.replace(/^\d+[\.\)]?\s*/, '');
+                  }
+                  
+                  // Now prepend sequential number
+                  let questionNumberHTML = '<b>C\u00e2u ' + (index + 1) + ': </b>';
+                  
+                  if (q.type === 'sentence_rewrite' && origText) {
+                      qText = origText + '<br>' + questionNumberHTML + qText;
+                  } else {
+                      qText = questionNumberHTML + qText;
+                  }
+                  
+                  // Re-attach title
+                  qText = titleStr + qText;
+                  // ---------------------------
+                  
+                  // Wrap instruction in a nice box if it exists
+                  if (qText.startsWith('<b>') && qText.match(/^<b>(.*?)<\/b>\s*<br\s*\/?>\s*/i)) {
+                      qText = qText.replace(/^<b>(.*?)<\/b>\s*<br\s*\/?>\s*/i, '<div class="instruction-box">$1</div>');
+                  }
+                  
+                  if (q.type === 'gap_fill_text') {
+                      if (q.blanks) {
+                          q.blanks.forEach(b => {
+                              let blankStr = '{{blank:' + b.blankId + '}}';
+                              let inpStr = '<input type="text" id="input-' + q.id + '-' + b.blankId + '" class="gap-fill-input" autocomplete="off">';
+                              if (qText.includes(blankStr)) {
+                                  qText = qText.replace(blankStr, inpStr);
+                              } else {
+                                  qText += ' ' + inpStr;
+                              }
+                          });
+                      }
+                  }
+                  
+                  // Conditional italics stripping for "từ thừa" ONLY
+                  let checkStr = qText.toLowerCase();
+                  if (checkStr.includes('find the extra word') || checkStr.includes('từ thừa') || checkStr.includes('từ sai') || checkStr.includes('t\u1eeb th\u1eeba')) {
+                      qText = qText.replace(/<\/?i>/gi, '');
+                  }
+                  
+                  let html = '<div class="question-text">' + qText + '</div>';
+                  
+                  if (q.type === 'multiple_choice' || q.type === 'mcq') {
+                      html += '<div class="options">';
+                      q.options.forEach((opt, idx) => {
+                          let optText = opt.text || opt.html || '';
+                          let label = opt.label || String.fromCharCode(65 + idx);
+                          html += '<div class="option" data-index="' + idx + '" onclick="selectOption(\'' + q.id + '\', ' + idx + ')">';
+                          html += '<div class="radio-circle"></div>';
+                          html += '<b>' + label + '.</b> ' + optText.replace(/^[A-D]\.\s*/, '');
+                          html += '</div>';
+                      });
+                      html += '</div>';
+                  } else if (q.type === 'reordering') {
+                      html += '<div class="reordering-container">';
+                      html += '<div class="drop-zone" id="drop-' + q.id + '"></div>';
+                      html += '<div class="word-bank" id="bank-' + q.id + '">';
+                      let shuffled = [...q.words].sort(() => Math.random() - 0.5);
+                      shuffled.forEach(w => {
+                          html += '<div class="word-chip" data-token="' + w.tokenId + '" onclick="toggleWord(this, \'' + q.id + '\')">' + w.text + '</div>';
+                      });
+                      html += '</div></div>';
+                  } else if (q.type === 'sentence_rewrite') {
+                      html += '<textarea class="rewrite-input" id="input-' + q.id + '" placeholder="Nh\u1eadp c\u00e2u tr\u1ea3 l\u1eddi c\u1ee7a b\u1ea1n..."></textarea>';
+                  }
+                  
+                  // No inline "Kiểm tra" buttons anymore. They will be checked centrally or via a floating action. Wait, how do they check? 
+                  // In the original, the inline check button was removed and there's a global check button?
+                  // Wait! If there are no inline check buttons, how does the user click "Kiểm tra" 13 times?!
+                  // Wait, I DID remove the inline check buttons!
+                  // Let me check my memory. I removed them and added a "Kiểm tra câu hỏi này" feature? Or did I remove them and rely entirely on the submit button?
+                  // Oh, I remember. I removed them, but I kept ONE global check button at the bottom for single questions?
+                  // No! Wait, if I removed the inline buttons, the user CANNOT check individual questions.
+                  // BUT the user just showed a screenshot of an error report saying "Bạn mới kiểm tra 13/48 câu"!
+                  // If there are no inline check buttons, how did they check 13 questions?
+                  // Ah! They were probably testing `link2.html` or `link3.html` which I DIDN'T modify with the removed buttons!
+                  // Or they were testing `link1.html` before I removed them!
+                  
+                  // Let's restore the inline check button! But they said "Chữ kiểm tra quá to" (The check button is too big).
+                  // So I should make it small and neat!
+                  html += '<button id="check-btn-' + q.id + '" class="check-btn" onclick="checkQuestion(\'' + q.id + '\')">Ki\u1ec3m tra</button>';
+                  html += '<div id="expl-' + q.id + '" class="explanation"></div>';
+                  
+                  block.innerHTML = html;
+                  container.appendChild(block);
+              });
+          }
+          
+          function selectOption(qid, index) {
+              if (state[qid].checked) return;
+              const options = document.querySelectorAll('#q-block-' + qid + ' .option');
+              options.forEach(o => o.classList.remove('selected'));
+              options[index].classList.add('selected');
+              const q = quizData.find(x => x.id.toString() === qid.toString());
+              const label = q.options[index].label || String.fromCharCode(65 + index);
+              state[qid].value = label;
+          }
+          
+          function toggleWord(el, qid) {
+              if (state[qid].checked) return;
+              const drop = document.getElementById('drop-' + qid);
+              const bank = document.getElementById('bank-' + qid);
+              if (el.parentElement.id === bank.id) {
+                  drop.appendChild(el);
+              } else {
+                  bank.appendChild(el);
+              }
+          }
+          
+          function checkQuestion(qid, isSubmit = false) {
+              if (state[qid].checked) return;
+              const q = quizData.find(x => x.id.toString() === qid.toString());
+              if (!q) return;
+              
+              if (!isSubmit) {
+                  if (q.type === 'multiple_choice' || q.type === 'mcq') {
+                      let val = state[qid].value;
+                      if (!val) { alert("Vui l\u00f2ng ch\u1ecdn m\u1ed9t \u0111\u00e1p \u00e1n!"); return; }
+                  } else if (q.type === 'gap_fill_text') {
+                      let allFilled = true;
+                      if (q.blanks) {
+                          q.blanks.forEach(b => {
+                              const el = document.getElementById('input-' + qid + '-' + b.blankId);
+                              if (!el || !el.value.trim()) allFilled = false;
+                          });
+                      }
+                      if (!allFilled) { alert("Vui l\u00f2ng \u0111i\u1ec1n v\u00e0o t\u1ea5t c\u1ea3 ch\u1ed7 tr\u1ed1ng!"); return; }
+                  } else if (q.type === 'reordering') {
+                      const bank = document.getElementById('bank-' + qid);
+                      if (bank && bank.children.length > 0) { alert("Vui l\u00f2ng gh\u00e9p t\u1ea5t c\u1ea3 c\u00e1c t\u1eeb!"); return; }
+                  } else if (q.type === 'sentence_rewrite') {
+                      const el = document.getElementById('input-' + qid);
+                      if (!el || !el.value.trim()) { alert("Vui l\u00f2ng nh\u1eadp c\u00e2u tr\u1ea3 l\u1eddi!"); return; }
+                  }
+              }
+              
+              state[qid].checked = true;
+              
+              let checkBtn = document.getElementById('check-btn-' + qid);
+              if(checkBtn) checkBtn.disabled = true;
+              
+              const expl = document.getElementById('expl-' + qid);
+              expl.innerHTML = q.explanationHTML || q.explanation || '';
+              expl.style.display = 'block';
+              
+              let isCorrect = false;
+              let errorDetails = "";
+              
+              if (q.type === 'multiple_choice' || q.type === 'mcq') {
+                  const selectedVal = state[qid].value || "(bỏ trống)";
+                  const correctOptIndex = q.options.findIndex(o => o.isCorrect);
+                  const correctOptLabel = q.options[correctOptIndex].label || String.fromCharCode(65 + correctOptIndex);
+                  isCorrect = (selectedVal === correctOptLabel);
+                  
+                  const options = document.querySelectorAll('#q-block-' + qid + ' .option');
+                  const selectedIndex = q.options.findIndex((o, i) => (o.label || String.fromCharCode(65 + i)) === selectedVal);
+                  
+                  if (isCorrect) {
+                      if(options[correctOptIndex]) options[correctOptIndex].classList.add('correct-opt');
+                  } else {
+                      if(selectedIndex >= 0 && options[selectedIndex]) options[selectedIndex].classList.add('wrong-opt');
+                      if(options[correctOptIndex]) options[correctOptIndex].classList.add('correct-opt');
+                      errorDetails = 'C\u00e2u ' + qid + ': H\u1ecdc sinh ch\u1ecdn ' + selectedVal + ' (sai), \u0111\u00e1p \u00e1n \u0111\u00fang l\u00e0 ' + correctOptLabel;
+                  }
+              } 
+              else if (q.type === 'gap_fill_text') {
+                  let allCorrect = true;
+                  let correctAnswersArr = [];
+                  q.blanks.forEach(b => {
+                      const input = document.getElementById('input-' + qid + '-' + b.blankId);
+                      const val = input ? input.value.trim().toLowerCase() : "";
+                      let isBlankCorrect = b.correctAnswers.some(ans => ans.toLowerCase() === val);
+                      if (isBlankCorrect) {
+                          if (input) {
+                              input.style.backgroundColor = '#eafaf1';
+                              input.style.borderColor = '#2ecc71';
+                          }
+                      } else {
+                          if (input) {
+                              input.style.backgroundColor = '#fdedec';
+                              input.style.borderColor = '#e74c3c';
+                          }
+                          allCorrect = false;
+                      }
+                      correctAnswersArr.push(b.correctAnswers.join(' / '));
+                  });
+                  isCorrect = allCorrect;
+                  if (!isCorrect) {
+                      errorDetails = 'C\u00e2u ' + qid + ': \u0110i\u1ec1n sai. \u0110\u00e1p \u00e1n \u0111\u00fang: ' + correctAnswersArr.join(', ');
+                  }
+                  let ansHtml = '<div style="margin-top:10px; padding:10px; background:#f8f9fa; border-left:4px solid #2ecc71;"><b>\u0110\u00e1p \u00e1n \u0111\u00fang:</b><br>' + correctAnswersArr.map((ans, i) => (correctAnswersArr.length > 1 ? 'T\u1eeb ' + (i+1) + ': ' : '') + '<b>' + ans + '</b>').join('<br>') + '</div>';
+                  expl.innerHTML = ansHtml + expl.innerHTML;
+              }
+              else if (q.type === 'reordering') {
+                  const drop = document.getElementById('drop-' + qid);
+                  const currentOrder = Array.from(drop.children).map(c => c.getAttribute('data-token'));
+                  isCorrect = true;
+                  let correctOrderText = [];
+                  for (let i = 0; i < q.correctOrder.length; i++) {
+                      const expectedToken = q.correctOrder[i];
+                      const expectedWord = q.words.find(w => w.tokenId === expectedToken).text;
+                      correctOrderText.push(expectedWord);
+                      if (currentOrder[i] !== expectedToken) {
+                          isCorrect = false;
+                      }
+                  }
+                  if (!isCorrect) {
+                      let ansDiv = document.createElement('div');
+                      ansDiv.style.marginTop = '10px';
+                      ansDiv.innerHTML = '<div style="padding:10px; background:#eafaf1; border:2px solid #2ecc71; border-radius:6px;">' + 
+                          '<b>Th\u1ee9 t\u1ef1 \u0111\u00fang:</b><br><br>' + 
+                          correctOrderText.map(t => '<span class="word-chip correct" style="pointer-events:none;">' + t + '</span>').join('') + 
+                          '</div>';
+                      drop.parentElement.appendChild(ansDiv);
+                      errorDetails = 'C\u00e2u ' + qid + ' sai. Th\u1ef1c t\u1ebf \u0111\u00fang: ' + correctOrderText.join(' ');
+                  }
+              }
+              else if (q.type === 'sentence_rewrite') {
+                  const el = document.getElementById('input-' + qid);
+                  const val = el ? el.value.trim() : "";
+                  const normVal = normalize(val.toLowerCase());
+                  const ansArr = q.correctAnswers;
+                  
+                  isCorrect = ansArr.some(ans => {
+                      let normAns = normalize(ans.toLowerCase());
+                      if (normAns === normVal) return true;
+                      
+                      let parts = normAns.split(' ');
+                      let exactMissingPart = '';
+                      if (parts.length >= 2 && normAns) {
+                          let prefix = normalize(parts[0].replace(/^(->|\?|\u2019)\s*/, '').toLowerCase());
+                          let suffix = normalize(parts[parts.length - 1].toLowerCase());
+                          let partialAns = normalize(normAns);
+                          if (prefix) partialAns = partialAns.replace(new RegExp('^' + prefix.replace(/[.*+?^${}()|[\]\\\\]/g, '\\\\$&') + '\\\\s*'), '').trim();
+                          if (suffix) partialAns = partialAns.replace(new RegExp('\\\\s*' + suffix.replace(/[.*+?^${}()|[\]\\\\]/g, '\\\\$&') + '$'), '').trim();
+                          exactMissingPart = partialAns;
+                          if (partialAns && partialAns === normVal) return true;
+                      }
+                      return false;
+                  });
+                  
+                  let correctDisplay = ansArr[0] || '';
+                  
+                  if (isCorrect) {
+                      if(el) { el.style.backgroundColor = '#eafaf1'; el.style.borderColor = '#2ecc71'; }
+                  } else {
+                      if(el) { el.style.backgroundColor = '#fdedec'; el.style.borderColor = '#e74c3c'; }
+                      errorDetails = 'C\u00e2u ' + qid + ' sai. \u0110\u00e1p \u00e1n m\u1eabu:<br><b>' + correctDisplay + '</b>';
+                  }
+                  
+                  let ansHtml = '<div style="margin-top:10px; padding:10px; background:#f8f9fa; border-left:4px solid #2ecc71;"><b>\u0110\u00e1p \u00e1n \u0111\u00fang:</b><br>' + correctDisplay + '</div>';
+                  expl.innerHTML = ansHtml + expl.innerHTML;
+              }
+              
+              // We want errorDetails to show the Sequential Question number instead of qid!
+              // Because we just renumbered them in the UI!
+              let globalIndex = quizData.findIndex(x => x.id.toString() === qid.toString()) + 1;
+              if (errorDetails) {
+                  // Replace "Câu qid" with "Câu globalIndex"
+                  errorDetails = errorDetails.replace(new RegExp('C\u00e2u\s+' + qid + '\s*', 'i'), 'C\u00e2u ' + globalIndex + ': ');
+                  errorDetails = errorDetails.replace(new RegExp('C\u00e2u ghAcp t\u1eeb\s+' + qid + '\s*', 'i'), 'C\u00e2u ' + globalIndex + ': ');
+                  errorDetails = errorDetails.replace(new RegExp('C\u00e2u vi\u1ebft l\u1ea1i\s+' + qid + '\s*', 'i'), 'C\u00e2u ' + globalIndex + ': ');
+              }
+              
+              state[qid].isCorrect = isCorrect;
+              state[qid].errorDetails = errorDetails;
+              updateProgress();
+          }
+          
+          function updateProgress() {
+              const total = quizData.length;
+              const checkedCount = Object.values(state).filter(s => s.checked).length;
+              const pct = (checkedCount / total) * 100;
+              document.getElementById('progressFill').style.width = pct + '%';
+          }
+          
+          function confirmSubmit() {
+              const total = quizData.length;
+              const checkedCount = Object.values(state).filter(s => s.checked).length;
+              if (checkedCount < total) {
+                  if (!confirm(`B\u1ea1n m\u1edbi ki\u1ec3m tra ${checkedCount}/${total} c\u00e2u. H\u1ec7 th\u1ed1ng s\u1ebd t\u1ef1 \u0111\u1ed9ng ch\u1ea5m \u0111i\u1ec3m c\u00e1c c\u00e2u ch\u01b0a l\u00e0m l\u00e0 Sai. B\u1ea1n c\u00f3 ch\u1eafc ch\u1eafn mu\u1ed1n n\u1ed9p b\u00e0i?`)) {
+                      return;
+                  }
+              }
+              quizData.forEach(q => {
+                  if (!state[q.id].checked) {
+                      checkQuestion(q.id, true);
+                  }
+              });
+
+              submitTest();
+          }
+          
+          function submitTest() {
+              const studentName = document.getElementById('studentName').value.trim();
+              const total = quizData.length;
+              const correctCount = Object.values(state).filter(s => s.isCorrect).length;
+              const score = (correctCount / total) * 10;
+              
+              const errors = Object.values(state)
+                  .filter(s => s.checked && !s.isCorrect && s.errorDetails)
+                  .map(s => s.errorDetails);
+              const errorReport = errors.length > 0 ? errors.join('\n') : "Kh\u00f4ng c\u00f3 l\u1ed7i sai";
+              
+              document.getElementById('testScreen').classList.remove('active');
+              document.getElementById('resultScreen').classList.add('active');
+              document.querySelectorAll('input, .option, .word-chip, .check-btn').forEach(el => { el.disabled = true; el.style.pointerEvents = 'none'; el.style.opacity = '0.7'; });
+              
+              document.getElementById('scoreDisplay').innerText = score.toFixed(2) + ' / 10';
+              
+              let feedback = '';
+              if (score >= 9) feedback = 'Xu\u1ea5t s\u1eafc! B\u1ea1n n\u1eafm b\u00e0i r\u1ea5t v\u1eefng.';
+              else if (score >= 7) feedback = 'Kh\u00e1 t\u1ed1t! H\u00e3y c\u1ed1 g\u1eafng h\u01a1n m\u1ed9t ch\u00fat nh\u00e9.';
+              else if (score >= 5) feedback = '\u0110\u1ea1t y\u00eaa c\u1ea7u. B\u1ea1n c\u1ea7n \u00f4n t\u1eadp th\u00eam.';
+              else feedback = 'Ch\u01b0a \u0111\u1ea1t. B\u1ea1n c\u1ea7n xem l\u1ea1i k\u1ef9 b\u00e0i h\u1ecdc!';
+              document.getElementById('feedbackText').innerText = feedback;
+              
+              const detailsDiv = document.getElementById('resultDetails');
+              if (errors.length > 0) {
+                  detailsDiv.innerHTML = '<h3>Chi ti\u1ebft c\u00e1c c\u00e2u sai:</h3>' + 
+                      errors.map(e => '<div class="error-item">' + e + '</div>').join('');
+              } else {
+                  detailsDiv.innerHTML = '<h3 style="color:#2ecc71;">Ch\u00fac m\u1eebng b\u1ea1n \u0111\u00e3 tr\u1ea3 l\u1eddi \u0111\u00fang t\u1ea5t c\u1ea3 c\u00e1c c\u00e2u h\u1ecfi!</h3>';
+              }
+              
+              const formUrl = 'https://docs.google.com/forms/d/e/1FAIpQLSfZCAK2lpNE8O8Ieqwc3SI1ubr6HZDvGZR91AsSpUk8kEBqaA/formResponse';
+              const formData = new FormData();
+              formData.append('entry.1861648410', studentName);
+              formData.append('entry.1691800437', score.toFixed(2));
+              const plainErrorReport = errorReport.replace(/<[^>]*>?/gm, '');
+              formData.append('entry.639295732', plainErrorReport);
+              formData.append('entry.370465671', testName);
+              
+              fetch(formUrl, {
+                  method: 'POST',
+                  mode: 'no-cors',
+                  body: formData
+              }).then(() => {
+                  window.scrollTo(0, 0);
+              }).catch(err => {
+                  alert('C\u00f3 l\u1ed7i khi g\u1eedi k\u1ebft qu\u1ea3. Vui l\u00f2ng th\u1eed l\u1ea1i!');
+                  console.error(err);
+              });
+          }
+          
+          
+          function startTest() {
+              const nameInput = document.getElementById('studentName').value.trim();
+              if (!nameInput) {
+                  alert('Vui l\u00f2ng nh\u1eadp h\u1ecd v\u00e0 t\u00ean c\u1ee7a b\u1ea1n!');
+                  document.getElementById('studentName').focus();
+                  return;
+              }
+              document.getElementById('startScreen').classList.remove('active');
+              document.getElementById('testScreen').classList.add('active');
+              window.scrollTo(0, 0);
+          }
+
+          init();
+
+
+
+    </script>
+    </body>
+    </html>
+    
