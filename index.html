@@ -177,7 +177,7 @@
         }
         
         let stripped = false;
-        nq.questionHTML = (nq.questionHTML || '').replace(/(^|<br\s*\/?>|<\/b>|<\/strong>|<\/p>)\s*(?:C[^\s]*\s*\d+[:\.]?\s*|\d+[\.\)]\s*)/i, (match, p1) => {
+        nq.questionHTML = (nq.questionHTML || '').replace(/(^|<br\s*\/?>|<\/b>|<\/strong>|<\/p>)\s*(?:C[^\s]*\s*\d+[:\.]?\s*|\d+(?:[\.\)]|\b\s+)\s*)/i, (match, p1) => {
             if (!stripped) {
                 stripped = true;
                 return p1 + ' ';
@@ -185,7 +185,7 @@
             return match;
         });
         if (nq.originalSentenceHTML) {
-            nq.originalSentenceHTML = (nq.originalSentenceHTML || '').replace(/(^|<br\s*\/?>|<\/b>|<\/strong>|<\/p>)\s*(?:C[^\s]*\s*\d+[:\.]?\s*|\d+[\.\)]\s*)/i, (match, p1) => {
+            nq.originalSentenceHTML = (nq.originalSentenceHTML || '').replace(/(^|<br\s*\/?>|<\/b>|<\/strong>|<\/p>)\s*(?:C[^\s]*\s*\d+[:\.]?\s*|\d+(?:[\.\)]|\s+)\s*)/i, (match, p1) => {
                 return p1 + ' ';
             });
         }
